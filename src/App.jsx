@@ -4,7 +4,7 @@ const ASSETS = [
   { ticker: "IB1T.L",   label: "IB1T",   group: "Bitcoin ETP",    color: "#F7931A" },
   { ticker: "BTC-USD",  label: "BTC/USD", group: "Bitcoin ETP",    color: "#F7931A" },
   { ticker: "LQQS.L",   label: "LQQS",   group: "Tech ETF",       color: "#0099bb" },
-    { ticker: "DAGB.L",   label: "DAGB",   group: "Tech ETF",       color: "#0099bb" },
+   { ticker: "DAGB.L",   label: "DAGB",   group: "Tech ETF",       color: "#0099bb" },
   { ticker: "SOIL.L",   label: "SOIL",   group: "Oil ETP",        color: "#FFB800" },
   { ticker: "SBRT.L",   label: "SBRT",   group: "Oil ETP",        color: "#FFB800" },
   { ticker: "^GSPC",    label: "S&P 500", group: "Index",         color: "#A78BFA" },
@@ -12,6 +12,7 @@ const ASSETS = [
   { ticker: "^FTSE",    label: "FTSE",   group: "Index",          color: "#A78BFA" },
   { ticker: "NVDA",     label: "NVIDIA", group: "Stock",          color: "#76EE00" },
   { ticker: "TSLA",     label: "Tesla",  group: "Stock",          color: "#76EE00" },
+  { ticker: "JPM",   label: "JPM",   group: "Stock",              color: "#76EE00" },
   { ticker: "AAPL",     label: "Apple",  group: "Stock",          color: "#76EE00" },
 ];
 
