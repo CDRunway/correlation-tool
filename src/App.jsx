@@ -3,8 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 const ASSETS = [
   { ticker: "IB1T.L",   label: "IB1T",   group: "Bitcoin ETP",    color: "#F7931A" },
   { ticker: "BTC-USD",  label: "BTC/USD", group: "Bitcoin ETP",    color: "#F7931A" },
-  { ticker: "LQQS.L",   label: "LQQS",   group: "Tech ETF",       color: "#00D4FF" },
-  { ticker: "DAGB.L",   label: "DAGB",   group: "Tech ETF",       color: "#00D4FF" },
+  { ticker: "LQQS.L",   label: "LQQS",   group: "Tech ETF",       color: "#0099bb" },
+  { ticker: "DAGB.L",   label: "DAGB",   group: "Tech ETF",       color: "#0099bb" },
   { ticker: "SOIL.L",   label: "SOIL",   group: "Oil ETP",        color: "#FFB800" },
   { ticker: "SBRT.L",   label: "SBRT",   group: "Oil ETP",        color: "#FFB800" },
   { ticker: "^GSPC",    label: "S&P 500", group: "Index",         color: "#A78BFA" },
@@ -34,7 +34,7 @@ const SEED_MATRIX = {
 };
 
 function getColor(val) {
-  if (val === null) return "#1a1a2e";
+  if (val === null) return "#e8edf5";
   const v = Math.max(-1, Math.min(1, val));
   if (v >= 0) {
     const t = v;
@@ -59,7 +59,7 @@ function getTextColor(val) {
 function shimmer() {
   return (
     <div style={{
-      background: "linear-gradient(90deg, #1a1a2e 25%, #22224a 50%, #1a1a2e 75%)",
+      background: "linear-gradient(90deg, #e8edf5 25%, #d0d8ea 50%, #e8edf5 75%)",
       backgroundSize: "200% 100%",
       animation: "shimmer 1.5s infinite",
       borderRadius: 4,
@@ -175,7 +175,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 13.5,
             lineHeight: 1.7,
-            color: "#c8cfe8",
+            color: "#2a3350",
             paddingLeft: 12,
           }}>{body}</div>
         </div>
@@ -188,8 +188,8 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#0d0d1a",
-      color: "#e0e4f0",
+      background: "#f4f6fb",
+      color: "#1a2038",
       fontFamily: "'DM Sans', sans-serif",
       padding: "0 0 40px",
     }}>
@@ -204,14 +204,14 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
         .asset-pill { transition: all 0.15s; cursor: pointer; }
         .asset-pill:hover { transform: translateY(-1px); }
         ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: #0d0d1a; }
-        ::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 2px; }
+        ::-webkit-scrollbar-track { background: #f4f6fb; }
+        ::-webkit-scrollbar-thumb { background: #c8d0e0; border-radius: 2px; }
       `}</style>
 
       {/* Header */}
       <div style={{
-        background: "linear-gradient(180deg, #111130 0%, #0d0d1a 100%)",
-        borderBottom: "1px solid #1e1e3a",
+        background: "linear-gradient(180deg, #ffffff 0%, #f4f6fb 100%)",
+        borderBottom: "1px solid #dde3f0",
         padding: "24px 28px 20px",
       }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
@@ -220,7 +220,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
               fontFamily: "'Space Mono', monospace",
               fontSize: 10,
               letterSpacing: "0.2em",
-              color: "#4a4a7a",
+              color: "#7a85a0",
               textTransform: "uppercase",
               marginBottom: 6,
             }}>PORTFOLIO INTELLIGENCE</div>
@@ -228,10 +228,10 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
               fontFamily: "'Space Mono', monospace",
               fontSize: 22,
               fontWeight: 700,
-              color: "#e0e4f0",
+              color: "#1a2038",
               letterSpacing: "-0.02em",
             }}>Correlation Matrix</div>
-            <div style={{ fontSize: 12, color: "#4a4a7a", marginTop: 4 }}>
+            <div style={{ fontSize: 12, color: "#7a85a0", marginTop: 4 }}>
               {lastUpdated
                 ? `Last updated: ${lastUpdated.toLocaleTimeString("en-GB")} · End of day · Yahoo Finance`
                 : "Loading market data..."}
@@ -279,7 +279,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                 border: tab === t ? "1px solid #00D4FF44" : "1px solid transparent",
                 borderRadius: 6,
                 padding: "6px 14px",
-                color: tab === t ? "#00D4FF" : "#4a4a7a",
+                color: tab === t ? "#00D4FF" : "#7a85a0",
                 fontFamily: "'Space Mono', monospace",
                 fontSize: 10,
                 letterSpacing: "0.12em",
@@ -299,10 +299,10 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
           <div style={{ animation: "fadeIn 0.3s ease" }}>
             {/* Legend */}
             <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20, flexWrap: "wrap" }}>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#4a4a7a", letterSpacing: "0.1em" }}>CORRELATION</div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#7a85a0", letterSpacing: "0.1em" }}>CORRELATION</div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div style={{ width: 80, height: 10, borderRadius: 4, background: "linear-gradient(90deg, rgb(255,59,48), #0d0d1a, rgb(0,212,255))" }} />
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#4a4a7a" }}>-1 ← 0 → +1</span>
+                <div style={{ width: 80, height: 10, borderRadius: 4, background: "linear-gradient(90deg, rgb(255,59,48), #f4f6fb, rgb(0,212,255))" }} />
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "#7a85a0" }}>-1 ← 0 → +1</span>
               </div>
               {[
                 { color: "#F7931A", label: "Bitcoin" },
@@ -313,7 +313,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
               ].map(g => (
                 <div key={g.label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
                   <div style={{ width: 8, height: 8, borderRadius: "50%", background: g.color }} />
-                  <span style={{ fontSize: 11, color: "#4a4a7a" }}>{g.label}</span>
+                  <span style={{ fontSize: 11, color: "#7a85a0" }}>{g.label}</span>
                 </div>
               ))}
             </div>
@@ -362,7 +362,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                             onMouseLeave={() => setTooltip(null)}
                             onClick={() => { setSelected(rowAsset.label); setTab("spotlight"); }}
                             style={{
-                              background: matrix ? getColor(val) : "#1a1a2e",
+                              background: matrix ? getColor(val) : "#e8edf5",
                               width: 44,
                               height: 36,
                               textAlign: "center",
@@ -383,7 +383,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                                 {val === 1 ? "—" : val?.toFixed(2)}
                               </span>
                             ) : (
-                              <div style={{ width: 24, height: 8, background: "#2a2a4a", borderRadius: 2, margin: "auto" }} />
+                              <div style={{ width: 24, height: 8, background: "#c8d0e0", borderRadius: 2, margin: "auto" }} />
                             )}
                           </td>
                         );
@@ -398,8 +398,8 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
             {tooltip && tooltip.val !== null && tooltip.row !== tooltip.col && (
               <div style={{
                 marginTop: 16,
-                background: "#13132b",
-                border: "1px solid #1e1e3a",
+                background: "#ffffff",
+                border: "1px solid #dde3f0",
                 borderRadius: 8,
                 padding: "12px 16px",
                 display: "inline-flex",
@@ -407,7 +407,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                 gap: 12,
                 animation: "fadeIn 0.15s ease",
               }}>
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#e0e4f0" }}>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: "#1a2038" }}>
                   {tooltip.row} ↔ {tooltip.col}
                 </span>
                 <span style={{
@@ -418,7 +418,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                 }}>
                   {tooltip.val?.toFixed(3)}
                 </span>
-                <span style={{ fontSize: 11, color: "#4a4a7a" }}>
+                <span style={{ fontSize: 11, color: "#7a85a0" }}>
                   {Math.abs(tooltip.val) > 0.7 ? "Strong" : Math.abs(tooltip.val) > 0.4 ? "Moderate" : "Weak"}
                   {tooltip.val > 0 ? " positive" : " negative"} correlation
                 </span>
@@ -432,13 +432,13 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                   fontFamily: "'Space Mono', monospace",
                   fontSize: 10,
                   letterSpacing: "0.15em",
-                  color: "#4a4a7a",
+                  color: "#7a85a0",
                   marginBottom: 12,
                 }}>⚑ UNUSUAL DIVERGENCES</div>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                   {divergences.map((d, i) => (
                     <div key={i} style={{
-                      background: "#13132b",
+                      background: "#ffffff",
                       border: "1px solid #FFB80022",
                       borderRadius: 8,
                       padding: "10px 14px",
@@ -447,10 +447,10 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                       <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#FFB800", marginBottom: 4 }}>
                         {d.a} ↔ {d.b}
                       </div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 16, color: "#e0e4f0" }}>
+                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 16, color: "#1a2038" }}>
                         {d.corr.toFixed(2)}
                       </div>
-                      <div style={{ fontSize: 11, color: "#4a4a7a", marginTop: 2 }}>Near-zero correlation</div>
+                      <div style={{ fontSize: 11, color: "#7a85a0", marginTop: 2 }}>Near-zero correlation</div>
                     </div>
                   ))}
                 </div>
@@ -463,7 +463,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
         {tab === "spotlight" && (
           <div style={{ animation: "fadeIn 0.3s ease" }}>
             <div style={{ marginBottom: 20 }}>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#4a4a7a", letterSpacing: "0.12em", marginBottom: 12 }}>SELECT ASSET</div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#7a85a0", letterSpacing: "0.12em", marginBottom: 12 }}>SELECT ASSET</div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 {ASSETS.map(a => (
                   <button
@@ -471,11 +471,11 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                     className="asset-pill"
                     onClick={() => setSelected(a.label)}
                     style={{
-                      background: selected === a.label ? `${a.color}22` : "#13132b",
-                      border: `1px solid ${selected === a.label ? a.color : "#1e1e3a"}`,
+                      background: selected === a.label ? `${a.color}22` : "#ffffff",
+                      border: `1px solid ${selected === a.label ? a.color : "#dde3f0"}`,
                       borderRadius: 20,
                       padding: "6px 14px",
-                      color: selected === a.label ? a.color : "#6a6a9a",
+                      color: selected === a.label ? a.color : "#8a95b0",
                       fontFamily: "'Space Mono', monospace",
                       fontSize: 10,
                       letterSpacing: "0.08em",
@@ -491,7 +491,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                 <div style={{
                   fontFamily: "'Space Mono', monospace",
                   fontSize: 10,
-                  color: "#4a4a7a",
+                  color: "#7a85a0",
                   letterSpacing: "0.12em",
                   marginBottom: 16,
                 }}>◎ {selected} CORRELATION BREAKDOWN</div>
@@ -505,10 +505,10 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                         display: "flex",
                         alignItems: "center",
                         gap: 14,
-                        background: "#13132b",
+                        background: "#ffffff",
                         borderRadius: 8,
                         padding: "12px 16px",
-                        border: "1px solid #1e1e3a",
+                        border: "1px solid #dde3f0",
                       }}>
                         <div style={{
                           fontFamily: "'Space Mono', monospace",
@@ -517,7 +517,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                           width: 60,
                           flexShrink: 0,
                         }}>{asset.label}</div>
-                        <div style={{ flex: 1, height: 6, background: "#1e1e3a", borderRadius: 3, overflow: "hidden" }}>
+                        <div style={{ flex: 1, height: 6, background: "#dde3f0", borderRadius: 3, overflow: "hidden" }}>
                           <div style={{
                             width: `${Math.abs(val) * 100}%`,
                             height: "100%",
@@ -537,7 +537,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                         }}>{val.toFixed(2)}</div>
                         <div style={{
                           fontSize: 10,
-                          color: "#4a4a7a",
+                          color: "#7a85a0",
                           width: 100,
                           flexShrink: 0,
                         }}>
@@ -561,7 +561,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                   ◈ CLAUDE IS ANALYSING YOUR PORTFOLIO...
                 </div>
                 {[1,2,3,4].map(i => (
-                  <div key={i} style={{ background: "#13132b", borderRadius: 8, padding: 16 }}>
+                  <div key={i} style={{ background: "#ffffff", borderRadius: 8, padding: 16 }}>
                     <div style={{ marginBottom: 10 }}>{shimmer()}</div>
                     <div style={{ marginBottom: 8 }}>{shimmer()}</div>
                     <div style={{ width: "70%" }}>{shimmer()}</div>
@@ -574,7 +574,7 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
               <div style={{
                 textAlign: "center",
                 padding: "60px 20px",
-                color: "#2a2a4a",
+                color: "#c8d0e0",
               }}>
                 <div style={{ fontSize: 40, marginBottom: 16 }}>◈</div>
                 <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, letterSpacing: "0.1em" }}>
@@ -588,10 +588,10 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
 
             {!aiLoading && aiAnalysis && (
               <div style={{
-                background: "#13132b",
+                background: "#ffffff",
                 borderRadius: 10,
                 padding: "24px",
-                border: "1px solid #1e1e3a",
+                border: "1px solid #dde3f0",
               }}>
                 <div style={{
                   display: "flex",
@@ -599,10 +599,10 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                   gap: 10,
                   marginBottom: 24,
                   paddingBottom: 16,
-                  borderBottom: "1px solid #1e1e3a",
+                  borderBottom: "1px solid #dde3f0",
                 }}>
                   <span style={{ color: "#00D4FF", fontSize: 14 }}>◈</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#4a4a7a", letterSpacing: "0.12em" }}>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#7a85a0", letterSpacing: "0.12em" }}>
                     AI ANALYSIS · {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
                   </span>
                 </div>
@@ -610,9 +610,9 @@ Be specific, data-aware, and direct. No generic disclaimers. Write for a sophist
                 <div style={{
                   marginTop: 20,
                   paddingTop: 16,
-                  borderTop: "1px solid #1e1e3a",
+                  borderTop: "1px solid #dde3f0",
                   fontSize: 10,
-                  color: "#2a2a4a",
+                  color: "#c8d0e0",
                   fontStyle: "italic",
                 }}>
                   This analysis is for informational purposes only and does not constitute financial advice.
