@@ -4,6 +4,7 @@ const ASSETS = [
   { ticker: "IB1T.L",   label: "IB1T",   group: "Bitcoin ETP",    color: "#F7931A" },
   { ticker: "BTC-USD",  label: "BTC/USD", group: "Bitcoin ETP",    color: "#F7931A" },
   { ticker: "LQQS.L",   label: "LQQS",   group: "Tech ETF",       color: "#0099bb" },
+  { ticker: "EQQQ.L",   label: "EQQQ",   group: "Tech ETF",       color: "#0099bb" },
   { ticker: "DAGB.L",   label: "DAGB",   group: "Tech ETF",       color: "#0099bb" },
   { ticker: "SOIL.L",   label: "SOIL",   group: "Oil ETP",        color: "#FFB800" },
   { ticker: "SBRT.L",   label: "SBRT",   group: "Oil ETP",        color: "#FFB800" },
