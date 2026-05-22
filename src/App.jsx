@@ -12,8 +12,7 @@ const ASSETS = [
   { ticker: "^FTSE",    label: "FTSE",   group: "Index",          color: "#A78BFA" },
   { ticker: "NVDA",     label: "NVIDIA", group: "Stock",          color: "#76EE00" },
   { ticker: "TSLA",     label: "Tesla",  group: "Stock",          color: "#76EE00" },
-  { ticker: "JPM",   label: "JPM",   group: "Stock",              color: "#76EE00" },
-  { ticker: "AAPL",     label: "Apple",  group: "Stock",          color: "#76EE00" },
+    { ticker: "AAPL",     label: "Apple",  group: "Stock",          color: "#76EE00" },
 ];
 
 const LABELS = ASSETS.map(a => a.label);
