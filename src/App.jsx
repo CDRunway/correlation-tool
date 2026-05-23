@@ -206,7 +206,7 @@ function PriceRow({asset,idx,prices,expected,setExpected,showExp,expLoading,cust
   const exUp=ex?(ex.pct>=0):true;
 
   return(
-    <div className="trow" style={{background:"#fff",borderRadius:8,border:"1px solid #e2e8f0",padding:"9px 12px",marginBottom:4,display:"grid",gridTemplateColumns:"28px 1fr 80px 80px 130px"+(showExp?" 80px 110px":""),gap:6,alignItems:"center",transition:"background 0.12s"}}>
+    <div className="trow" style={{background:"#fff",borderRadius:8,border:"1px solid #e2e8f0",padding:"9px 12px",marginBottom:4,display:"grid",gridTemplateColumns:"28px 1fr 80px 80px 130px 80px 110px",gap:6,alignItems:"center",transition:"background 0.12s"}}>
       <div style={{fontFamily:"monospace",fontSize:9,color:"#cbd5e1",fontWeight:600}}>#{idx+1}</div>
       <div>
         <div style={{fontSize:12,fontWeight:600,color:col}}>{asset.label}</div>
@@ -230,9 +230,8 @@ function PriceRow({asset,idx,prices,expected,setExpected,showExp,expLoading,cust
           </div>
         ):<span style={{color:"#cbd5e1",fontSize:10}}>—</span>}
       </div>
-      {showExp&&(
-        <div>
-          {expLoading?<Shimmer/>:ex?(
+      <div>
+          {!showExp?<span style={{color:"#e2e8f0",fontSize:10}}>—</span>:expLoading?<Shimmer/>:ex?(
             editOpen?(
               <div style={{display:"flex",gap:3}}>
                 <input autoFocus value={editVal} onChange={e=>setEditVal(e.target.value)}
@@ -252,8 +251,7 @@ function PriceRow({asset,idx,prices,expected,setExpected,showExp,expLoading,cust
             )
           ):<span style={{color:"#cbd5e1",fontSize:10}}>—</span>}
         </div>
-      )}
-      {showExp&&<div style={{fontSize:10,color:"#64748b",fontStyle:"italic",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{ex?.note||""}</div>}
+      <div style={{fontSize:10,color:"#64748b",fontStyle:"italic",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{showExp?(ex?.note||""):"↑ click GET EXPECTED"}</div>
     </div>
   );
 }
@@ -509,14 +507,14 @@ Direct. No disclaimers. Max 320 words.`,900);
         {/* ═══ PRICES & EXPECTED ═══ */}
         {tab==="prices"&&(
           <div style={{animation:"fadeIn 0.25s ease"}}>
-            <div style={{display:"grid",gridTemplateColumns:"28px 1fr 80px 80px 130px"+(showExp?" 80px 110px":""),gap:6,padding:"5px 12px",marginBottom:4}}>
+            <div style={{display:"grid",gridTemplateColumns:"28px 1fr 80px 80px 130px 80px 110px",gap:6,padding:"5px 12px",marginBottom:4}}>
               <div style={{fontFamily:"monospace",fontSize:9,color:"#94a3b8"}}>#</div>
               <div style={{fontFamily:"monospace",fontSize:9,color:"#94a3b8"}}>ASSET</div>
               <SHdr col="price" which="price">PRICE</SHdr>
               <SHdr col="pct" which="price">CHANGE %</SHdr>
-              <div style={{fontFamily:"monospace",fontSize:9,color:"#94a3b8"}}>BENCHMARK (dropdown if multiple)</div>
-              {showExp&&<SHdr col="expPct" which="price">EXPECTED %</SHdr>}
-              {showExp&&<div style={{fontFamily:"monospace",fontSize:9,color:"#94a3b8"}}>REASONING</div>}
+              <div style={{fontFamily:"monospace",fontSize:9,color:"#94a3b8"}}>BENCHMARK INDEX ▾</div>
+              <div style={{fontFamily:"monospace",fontSize:9,color:"#94a3b8"}}>{showExp?"EXPECTED %":"EXP % ⟵"}</div>
+              <div style={{fontFamily:"monospace",fontSize:9,color:"#94a3b8"}}>{showExp?"REASONING":"click GET EXPECTED"}</div>
             </div>
 
             {!prices&&[1,2,3,4,5].map(i=><div key={i} style={{background:"#fff",borderRadius:8,border:"1px solid #e2e8f0",padding:"10px 12px",marginBottom:4}}><Shimmer/></div>)}
@@ -526,11 +524,7 @@ Direct. No disclaimers. Max 320 words.`,900);
                 setExpected={setExpected} showExp={showExp} expLoading={expLoading} customAssets={customAssets}/>
             ))}
 
-            {!showExp&&(
-              <div style={{marginTop:10,padding:"9px 12px",background:"#eff6ff",borderRadius:7,border:"1px solid #bfdbfe",fontSize:11,color:"#1e40af"}}>
-                Click <b>GET EXPECTED</b> at the top to show AI pre-market estimates alongside actuals.
-              </div>
-            )}
+
             {dataMode==="demo"&&(
               <div style={{marginTop:6,padding:"9px 12px",background:"#fef9c3",borderRadius:7,border:"1px solid #fde68a",fontSize:11,color:"#92400e"}}>
                 ⚠ Demo data. Go to Settings & Live Data tab to connect real prices.
