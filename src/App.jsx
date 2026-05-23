@@ -1,5 +1,59 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
+// Sub-component so hooks are never called inside a .map()
+function PriceRow({ asset, idx, prices, expected, setExpected, showExpCol, expLoading, GC }) {
+  const [editOpen, setEditOpen] = useState(false);
+  const [editVal, setEditVal]   = useState("");
+  const d   = prices?.[asset.label] || { price: 0, pct: 0 };
+  const ex  = expected[asset.label];
+  const isUp = d.pct >= 0;
+  const exUp = ex ? ex.pct >= 0 : true;
+  const col  = GC[asset.group] || "#0f172a";
+  return (
+    <div className="trow" style={{background:"#fff",borderRadius:8,border:"1px solid #e2e8f0",padding:"9px 12px",marginBottom:4,display:"grid",gridTemplateColumns:"32px 1fr 90px 90px"+(showExpCol?" 90px 120px":""),gap:6,alignItems:"center",transition:"background 0.12s"}}>
+      <div style={{fontFamily:"monospace",fontSize:10,color:"#cbd5e1",fontWeight:600}}>#{idx+1}</div>
+      <div>
+        <div style={{fontSize:12,fontWeight:600,color:col}}>{asset.label}</div>
+        <div style={{fontSize:10,color:"#94a3b8"}}>{asset.group}</div>
+      </div>
+      <div style={{fontFamily:"monospace",fontSize:11,color:"#0f172a"}}>
+        {d.price>=1000?d.price.toLocaleString("en-GB",{maximumFractionDigits:0}):d.price.toFixed(2)}
+      </div>
+      <div>
+        <span style={{background:isUp?"#dcfce7":"#fee2e2",color:isUp?"#166534":"#dc2626",borderRadius:5,padding:"2px 7px",fontFamily:"monospace",fontSize:10,fontWeight:600}}>
+          {isUp?"▲":"▼"} {Math.abs(d.pct).toFixed(2)}%
+        </span>
+      </div>
+      {showExpCol && (
+        <div>
+          {expLoading ? <div style={{background:"linear-gradient(90deg,#e8edf5 25%,#d0d8ea 50%,#e8edf5 75%)",backgroundSize:"200% 100%",animation:"shimmer 1.5s infinite",borderRadius:4,height:13,width:"100%"}}/> : ex ? (
+            editOpen ? (
+              <div style={{display:"flex",gap:3}}>
+                <input autoFocus value={editVal} onChange={e=>setEditVal(e.target.value)}
+                  onKeyDown={e=>{
+                    if(e.key==="Enter"){const v=parseFloat(editVal);if(!isNaN(v))setExpected(p=>({...p,[asset.label]:{...ex,pct:v,overridden:true}}));setEditOpen(false);}
+                    if(e.key==="Escape")setEditOpen(false);
+                  }}
+                  style={{width:50,fontFamily:"monospace",fontSize:10,border:"1px solid #0369a1",borderRadius:4,padding:"2px 5px",outline:"none"}}/>
+                <button onClick={()=>{const v=parseFloat(editVal);if(!isNaN(v))setExpected(p=>({...p,[asset.label]:{...ex,pct:v,overridden:true}}));setEditOpen(false);}}
+                  style={{background:"#0369a1",color:"#fff",border:"none",borderRadius:4,padding:"2px 7px",fontSize:10,cursor:"pointer"}}>✓</button>
+              </div>
+            ) : (
+              <span onClick={()=>{setEditOpen(true);setEditVal(ex.pct.toFixed(2));}} title="Click to override"
+                style={{background:exUp?"#dcfce7":"#fee2e2",color:exUp?"#166534":"#dc2626",borderRadius:5,padding:"2px 7px",fontFamily:"monospace",fontSize:10,fontWeight:600,cursor:"pointer",display:"inline-block",border:ex.overridden?"1px solid #6d28d9":"none"}}>
+                {exUp?"▲":"▼"} {Math.abs(ex.pct).toFixed(2)}%
+              </span>
+            )
+          ) : <span style={{color:"#cbd5e1",fontSize:10}}>—</span>}
+        </div>
+      )}
+      {showExpCol && (
+        <div style={{fontSize:10,color:"#64748b",fontStyle:"italic"}}>{ex?.note||""}</div>
+      )}
+    </div>
+  );
+}
+
 const ALL_ASSETS = [
   { ticker:"IB1T.L",  label:"IB1T",    group:"Bitcoin"     },
   { ticker:"BTC-USD", label:"BTC/USD", group:"Bitcoin"     },
@@ -431,58 +485,9 @@ Direct. No disclaimers. Max 320 words.`,900);
               <div key={i} style={{background:"#fff",borderRadius:8,border:"1px solid #e2e8f0",padding:"10px 12px",marginBottom:5}}><Shimmer/></div>
             ))}
 
-            {prices&&sortedPrices().map((asset,idx)=>{
-              const d=prices[asset.label]||{price:0,pct:0};
-              const ex=expected[asset.label];
-              const isUp=d.pct>=0;
-              const exUp=ex?(ex.pct>=0):true;
-              const col=GC[asset.group]||"#0f172a";
-              const [editOpen,setEditOpen]=useState(false);
-              const [editVal,setEditVal]=useState("");
-              return(
-                <div key={asset.label} className="trow" style={{background:"#fff",borderRadius:8,border:"1px solid #e2e8f0",padding:"9px 12px",marginBottom:4,display:"grid",gridTemplateColumns:"32px 1fr 90px 90px"+(showExpCol?" 90px 120px":""),gap:6,alignItems:"center",transition:"background 0.12s"}}>
-                  <div style={{fontFamily:"monospace",fontSize:10,color:"#cbd5e1",fontWeight:600}}>#{idx+1}</div>
-                  <div>
-                    <div style={{fontSize:12,fontWeight:600,color:col}}>{asset.label}</div>
-                    <div style={{fontSize:10,color:"#94a3b8"}}>{asset.group}</div>
-                  </div>
-                  <div style={{fontFamily:"monospace",fontSize:11,color:"#0f172a"}}>
-                    {d.price>=1000?d.price.toLocaleString("en-GB",{maximumFractionDigits:0}):d.price.toFixed(2)}
-                  </div>
-                  <div>
-                    <span style={{background:isUp?"#dcfce7":"#fee2e2",color:isUp?"#166534":"#dc2626",borderRadius:5,padding:"2px 7px",fontFamily:"monospace",fontSize:10,fontWeight:600}}>
-                      {isUp?"▲":"▼"} {Math.abs(d.pct).toFixed(2)}%
-                    </span>
-                  </div>
-                  {showExpCol&&(
-                    <div>
-                      {expLoading?<Shimmer/>:ex?(
-                        editOpen?(
-                          <div style={{display:"flex",gap:3}}>
-                            <input autoFocus value={editVal} onChange={e=>setEditVal(e.target.value)}
-                              onKeyDown={e=>{
-                                if(e.key==="Enter"){const v=parseFloat(editVal);if(!isNaN(v))setExpected(p=>({...p,[asset.label]:{...ex,pct:v,overridden:true}}));setEditOpen(false);}
-                                if(e.key==="Escape")setEditOpen(false);
-                              }}
-                              style={{width:50,fontFamily:"monospace",fontSize:10,border:"1px solid #0369a1",borderRadius:4,padding:"2px 5px",outline:"none"}}/>
-                            <button onClick={()=>{const v=parseFloat(editVal);if(!isNaN(v))setExpected(p=>({...p,[asset.label]:{...ex,pct:v,overridden:true}}));setEditOpen(false);}}
-                              style={{background:"#0369a1",color:"#fff",border:"none",borderRadius:4,padding:"2px 7px",fontSize:10,cursor:"pointer"}}>✓</button>
-                          </div>
-                        ):(
-                          <span onClick={()=>{setEditOpen(true);setEditVal(ex.pct.toFixed(2));}} title="Click to override"
-                            style={{background:exUp?"#dcfce7":"#fee2e2",color:exUp?"#166534":"#dc2626",borderRadius:5,padding:"2px 7px",fontFamily:"monospace",fontSize:10,fontWeight:600,cursor:"pointer",display:"inline-block",border:ex.overridden?"1px solid #6d28d9":"none"}}>
-                            {exUp?"▲":"▼"} {Math.abs(ex.pct).toFixed(2)}%
-                          </span>
-                        )
-                      ):<span style={{color:"#cbd5e1",fontSize:10}}>—</span>}
-                    </div>
-                  )}
-                  {showExpCol&&(
-                    <div style={{fontSize:10,color:"#64748b",fontStyle:"italic"}}>{ex?.note||""}</div>
-                  )}
-                </div>
-              );
-            })}
+            {prices&&sortedPrices().map((asset,idx)=>(
+              <PriceRow key={asset.label} asset={asset} idx={idx} prices={prices} expected={expected} setExpected={setExpected} showExpCol={showExpCol} expLoading={expLoading} GC={GC}/>
+            ))}
 
             {dataMode==="demo"&&(
               <div style={{marginTop:10,padding:"9px 12px",background:"#fef9c3",borderRadius:7,border:"1px solid #fde68a",fontSize:11,color:"#92400e"}}>
